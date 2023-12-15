@@ -1,0 +1,253 @@
+body{
+    margin: 0;
+    font-family: Poppins;
+    font-size: 15px;
+    background-color: #E1DAD0;
+    color: #eee;
+}
+a{
+    color: #eee;
+    text-decoration: none;
+}
+header{
+    width: 1140px;
+    max-width: 90%;
+    margin: auto;
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+}
+header .logo img{
+    height: 50px;
+}
+header nav{
+    display: flex;
+    gap: 40px;
+}
+
+/* carousel */
+.carousel{
+    width: 100%;
+    height: 720px;
+    background-color: #555;
+    margin-top: -50px;
+    position: relative;
+}
+.carousel .list{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+.carousel .list .item{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.carousel .list .item::before{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    content: var(--title);
+    background-color: var(--bg-color);
+    font-size: 15em;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #eee4;
+    z-index: -1;
+}
+.carousel .list .item .content{
+    width: 1140px;
+    max-width: 90%;
+    height: 100%;
+    margin: auto;
+    padding-top: 50px;
+    box-sizing: border-box;
+    display: flex;
+    gap: 50px;
+    justify-content: space-between;
+    align-items: center;
+}
+.carousel .list .item .image{
+    flex-shrink: 0;
+    --left: -200px;
+    background: 
+        var(--img-src) var(--left) 0,
+        url(images/soda.png) no-repeat;
+    background-size:  100% auto;
+    background-blend-mode: multiply;
+    width: 300px;
+    height: 525px;
+    -webkit-mask-image: url(images/soda.png);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: auto 100%;
+    mask-image: url(images/soda.png);
+    mask-repeat: no-repeat;
+    mask-size: 100% auto;
+    transition: background 1s ease-in-out;
+}
+.carousel .list .item .info .title{
+    font-size: 6em;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1em;
+}
+.carousel .list .item .info .category{
+    opacity: 0.7;
+}
+.carousel .list .item .info .des{
+    margin: 1em 0;
+}
+.carousel .list .item .info a{
+    display: inline-flex;
+    gap: 20px;
+    font-weight: 500;
+}
+/* item active */
+.carousel .list .item{
+    z-index: 1;
+}
+.carousel .list .item.active{
+    z-index: 2;
+}
+.carousel .list .item.active .image{
+    --left: 0;
+}
+/* arrow */
+.arrows button{
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: #eee3;
+    color: #fff;
+    font-size: large;
+    left: 10%;
+    font-family: monospace;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.5s, color 0.5s;
+}
+.arrows button#next{
+    left: unset;
+    right: 10%;
+}
+.arrows button:hover{
+    background-color: #eee;
+    color: #000;
+}
+.dots li{
+    width: 15px;
+    height: 15px;
+    background-color: #eee5;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.dots li.active{
+    background-color: #eee;
+}
+.dots{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    bottom: 30px;
+    z-index: 2;
+    width: max-content;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: background 0.5s;
+}
+.carousel{
+    overflow: hidden;
+}
+/* next click */
+.carousel.effect .item .image{
+    --left: var(--transform-to);
+    animation: transformAnimation 1s ease-in-out 1 forwards;
+}
+@keyframes transformAnimation{
+    from{
+        transform: translateX(var(--transform-from));
+    }to{
+        transform: translateX(var(--transform-to));
+    }
+}
+.carousel.effect .item .info .title,
+.carousel.effect .item .info .category,
+.carousel.effect .item .info .des,
+.carousel.effect .item .info a{
+    animation: transformAnimation 1s ease-in-out 1 forwards;
+}
+.carousel.effect .item .info .category{
+    animation-delay: 0.1s;
+}
+.carousel.effect .item .info .des{
+    animation-delay: 0.2s;
+}
+.carousel.effect .item .info a{
+    animation-delay: 0.3s;
+}
+
+@keyframes animationClipPath {
+    to{
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+}
+.carousel.effect{
+    --transform: 200px;
+}
+.carousel.effect .item{
+    --transform-from: 0px;
+    --transform-to: var(--transform);
+}
+.carousel.effect .item.active{
+    --transform-from: calc(var(--transform) * -1);
+    --transform-to: 0px;
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    animation: animationClipPath 0.9s ease-in-out 1 forwards;
+}
+
+@media screen and (max-width: 767px){
+    .carousel{
+        height: 100vh;
+    }
+    .carousel .list .item .info{
+        position: absolute;
+        bottom: 10%;
+        width: 100%;
+        padding: 30px;
+        box-sizing: border-box;
+        text-align: center;
+        backdrop-filter: blur(20px);
+    }
+    .carousel .list .item .info .title{
+        font-size: 2em;
+    }
+    .carousel .list .item .info .des{
+        font-size: 0.8em;
+        text-align: justify;
+    }
+    .carousel .list .item .content{
+        justify-content: center;
+        align-items: start;
+    }
+    .carousel .arrows button{
+        top: unset;
+        bottom: 20px;
+    }
+}
